@@ -36,8 +36,8 @@ public class UsuarioController {
     public @ResponseBody Iterable<Usuario> buscarUsuarios() {
         return uRepository.findAll();
     }
+   //https://raquel-qua209050.herokuapp.com/api/usuario/ 
     
-    // http://localhost:8080/api/usuario/2 - nesse exemlo é usado uma variável de path(caminho)
     @GetMapping("/{id}")
     public @ResponseBody Optional<Usuario> buscarUsuario(@PathVariable Integer id){
         return uRepository.findById(id);
