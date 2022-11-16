@@ -14,7 +14,7 @@ public class Usuario {
     private String nome;
     private String email;
 
-    public Integer getId() {
+    public java.lang.Integer getId() {
         return id;
     }
 
