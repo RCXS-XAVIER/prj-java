@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-// http://localhost:8080/api/usuario/add?nome=Raquel&email=raquel.c.santos@aluno.senai.br -- nesse exemplo são usadas váriaveis de parametro chave=valor
+// http://localhost:8080/api/usuario/add?nome=Raquel&email=rakelcristina95@gmail.com
 
 @Controller
 @RequestMapping(path = "/api/usuario")
@@ -27,27 +26,34 @@ public class UsuarioController {
     @Autowired
     UsuarioRepository uRepository;
 
-    /**
-     * @param nome
-     * @param email
-     * @return
-     */
-    @PostMapping("/add")
-    public @ResponseBody String addUsuario(
-            @RequestParam String nome,
-            @RequestParam String email) {
-        Usuario objU = new Usuario();
-        objU.setNome(nome);
-        objU.setEmail(email);
-
+    @PostMapping("/")
+    public @ResponseBody Integer addUsuario(@RequestBody Usuario objU) {
         uRepository.save(objU);
-        return "Salvo";
+        return objU.getId();
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public @ResponseBody Iterable<Usuario> buscarUsuarios() {
         return uRepository.findAll();
     }
-}
 
-// https//:raquel-qua209050.herokuapp.com/api/usuario/
+    //// http://localhost:8080/api/usuario/2
+
+    @GetMapping("/{id}")
+    public @ResponseBody Optional<Usuario> buscarUsuario(@PathVariable Integer id) {
+        return uRepository.findById(id);
+    }
+
+    @PutMapping("/")
+    public @ResponseBody Usuario atualizar(@RequestBody Usuario objU) {
+        uRepository.save(objU);
+        return objU;
+    }
+
+    @DeleteMapping("/{id}")
+    public @ResponseBody String apagar(@PathVariable Integer id) {
+        uRepository.deleteById(id);
+        return "Ok ao apagar!";
+    }
+
+}
